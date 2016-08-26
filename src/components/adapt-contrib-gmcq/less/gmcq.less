@@ -1,0 +1,336 @@
+.gmcq-component {
+    &.gmcq-column-layout {
+        .gmcq-widget {
+            // Font size set to 0 so there's no gap between items
+            font-size: 0;
+            text-align: center;
+        }
+
+        .gmcq-item {
+            display: inline-block;
+            float: none;
+            vertical-align: top;
+
+            .dir-rtl & {
+                float: none;
+            }
+
+            &.even,
+            &.odd {
+                label {
+                    margin: 2.5%;
+
+                    .dir-rtl & {
+                        margin: 2.5%;
+                    }
+                }
+            }
+        }
+
+        .gmcq-item-inner {
+            font-size: @body-text-font-size;
+            text-align: left;
+
+            .dir-rtl & {
+                text-align: right;
+            }
+        }
+    }
+
+    .gmcq-item {
+        position: relative;
+        width: 50%;
+        margin-bottom: @item-margin-bottom;
+        float: left;
+        .dir-rtl & {
+            float: right;
+        }
+
+        &.even {
+            label {
+                margin-left: 5%;
+                .dir-rtl & {
+                    margin-left: inherit;
+                    margin-right: 5%;
+                }
+            }
+        }
+
+        &.odd {
+            label {
+                margin-right: 5%;
+                .dir-rtl & {
+                    margin-right: inherit;
+                    margin-left: 5%;
+                }
+            }
+        }
+
+        @media all and (max-width:@device-width-medium) {
+            width: 100%;
+            &.even,
+            &.odd {
+                label {
+                    margin-left: 0%;
+                    margin-right: 0%;
+                }
+            }
+        }
+
+    }
+
+
+    &.col-4 {
+        .gmcq-item {
+            width: 25%;
+
+            &.item-1, &.item-2 {
+                label {
+                    margin-left: 2.5%;
+                    margin-right: 2.5%;
+                }
+            }
+
+            @media all and (max-width:@device-width-medium) {
+                width:100%;
+                &.even, &.odd {
+                    label {
+                        margin-left:0%;
+                        margin-right:0%;
+                    }
+                }
+            }
+        }
+    }
+
+
+    .gmcq-item label {
+        color: @item-text-color;
+        border: none;
+        margin-bottom: @item-margin-bottom;
+        position: relative;
+        z-index: 1;
+        background-color: transparent;
+        overflow: hidden;
+        cursor: pointer;
+        display: block;
+
+        img {
+            vertical-align: bottom;
+        }
+
+        .gmcq-answer-icon {
+            color: @item-color;
+            &.radio {
+                width: @icon-size + 2;
+                height: @icon-size + 2;
+                &:before {
+                    content: "\e65e";
+                }
+            }
+            &.checkbox {
+                border: 3px solid @item-text-color;
+                width: 18px;
+                height: 18px;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 2px;
+                &:before {
+                    content: " ";
+                }
+            }
+        }
+
+        &.selected {
+            color: @item-color-selected;
+            background-color: transparent;
+
+            .gmcq-item-icon {
+                color: @item-color-selected;
+
+                &.gmcq-correct-icon {
+                    color:@validation-success;
+                }
+
+                &.gmcq-incorrect-icon {
+                    color:@validation-error;
+                }
+            }
+
+            .gmcq-item-inner {
+                color: @item-color-selected;
+            }
+
+            .gmcq-answer-icon {
+                &.radio {
+                    &:before {
+                        content: "\e65d";
+                    }
+                }
+                &.checkbox {
+                    border: @item-border;
+                    border-color: @item-text-color-selected;
+                    width: 18px;
+                    height: 18px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border-radius: 2px;
+                    &:before {
+                        content: "\e633";
+                    }
+                }
+            }
+        }
+
+        &.disabled {
+            .gmcq-item-icon {
+                color: @item-color-disabled;
+            }
+            .gmcq-item-inner {
+                color: @item-color-disabled;
+            }
+        }
+
+
+    }
+
+    .gmcq-item-inner {
+        margin-left: @icon-size * 2;
+        color: @item-color;
+        padding: @item-padding-top 0 @item-padding-bottom 0;
+        .dir-rtl & {
+            margin-left: inherit;
+            margin-right: @icon-size * 2;
+            padding-right: (@icon-size+(@item-padding-left*2));
+        }
+
+    }
+
+    .gmcq-item input {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        filter: alpha(opacity=0); // ie8 fix for opacity on input
+        opacity: 0;
+        .dir-rtl & {
+            left: inherit;
+            right: 25px;
+        }
+    }
+
+    .gmcq-item-checkbox {
+        position: relative;
+    }
+
+    .gmcq-item-state {
+        background: none;
+        position: absolute;
+        width: @icon-size;
+        height: @icon-size;
+        top: 50%;
+        margin-top: -(@icon-size/2);
+        left: 10px;
+        z-index: 0;
+        .dir-rtl & {
+            left: inherit;
+            right: 10px;
+        }
+    }
+
+    .gmcq-correct-icon {
+        color: @validation-success;
+        display: none;
+    }
+
+    .gmcq-incorrect-icon {
+        color: @validation-error;
+        display: none;
+    }
+
+    .gmcq-widget {
+        &.show-user-answer {
+            label.selected {
+                .gmcq-item-inner {
+                    color: @item-color-selected;
+                }
+            }
+            .gmcq-item-icon {
+                display: none;
+            }
+            .incorrect {
+                .selected .gmcq-incorrect-icon {
+                    display: block;
+                }
+            }
+            .correct {
+                .selected .gmcq-correct-icon {
+                    display: block;
+                }
+            }
+        }
+
+        &.show-correct-answer {
+            label.selected {
+                .gmcq-item-inner {
+                    color: @item-color-selected;
+                }
+            }
+            .gmcq-item-icon {
+                display: none;
+            }
+            .selected .gmcq-correct-icon {
+                display: block;
+            }
+        }
+
+        &.disabled {
+            .gmcq-item label.selected.disabled {
+                background-color: transparent;
+                cursor: default;
+                .gmcq-item-icon {
+                    &.gmcq-correct-icon {
+                        color:@validation-success;
+                    }
+                    &.gmcq-incorrect-icon {
+                        color:@validation-error;
+                    }
+                }
+            }
+            .gmcq-item label.disabled {
+                color: @item-color-disabled;
+                background-color: transparent;
+                border-color: @item-border-color-disabled;
+                border: none;
+                cursor: default;
+
+            }
+
+            .gmcq-item.correct .selected .state {
+                color: @validation-success;
+            }
+
+            .gmcq-item.incorrect .selected .state {
+                color: @validation-error;
+            }
+        }
+    }
+}
+
+.no-touch {
+    .gmcq-component {
+        .gmcq-widget {
+            &:not(.disabled) {
+                .gmcq-item label:hover {
+                  color: @item-color-hover;
+                  background-color: transparent;
+                    .gmcq-item-icon {
+                        color: @item-color-hover;
+                    }
+                    .gmcq-item-inner {
+                        color: @item-color-hover;
+                    }
+                }
+            }
+        }
+    }
+}
